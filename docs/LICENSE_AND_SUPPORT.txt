@@ -1,0 +1,35 @@
+PASTEL VALORANT RANK OVERLAY - LICENSE AND SUPPORT
+
+PERSONAL USE LICENSE
+
+This purchase includes a personal-use streaming overlay setup.
+
+You may:
+- Use the overlay on your own live streams, recordings, and social media clips.
+- Use it with OBS, Meld, Streamlabs, or similar browser-source software.
+- Resize and position it inside your own stream scenes.
+- Use any of the five included color palettes.
+
+You may not:
+- Resell, redistribute, upload, or share the download files.
+- Share your complete widget URL or API key with another person.
+- Sell access to the hosted widget as another product.
+- Claim ownership of the widget source code, design, or documentation.
+- Package this product into another paid or free template bundle.
+
+SUPPORT
+
+Support includes help with the hosted setup page and browser-source settings.
+
+Support does not include:
+- Custom redesigns or additional widget layouts.
+- Custom coding.
+- Full stream-scene setup.
+- HenrikDev account or API support.
+- Troubleshooting unrelated third-party software issues.
+
+When requesting help, include a screenshot of your browser-source settings. Never send your API key. Hide the part of your widget URL after # before sharing it.
+
+DIGITAL PRODUCT NOTE
+
+This is a digital product. No physical item will be shipped. If something is not working, contact the seller so the setup can be diagnosed.

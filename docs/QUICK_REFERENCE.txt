@@ -1,0 +1,29 @@
+PASTEL VALORANT OVERLAY - QUICK REFERENCE
+
+Setup page:
+https://pastel-valorant-overlay.vercel.app/
+
+Get a free HenrikDev API key:
+https://api.henrikdev.xyz/dashboard/
+
+Riot ID format:
+Name#TAG
+
+Browser source size:
+Width: 1952
+Height: 1104
+
+Available palettes:
+Rose, Lavender, Sky, Mint, Peach
+
+Supported software:
+OBS, Meld, Streamlabs, and other software with browser sources
+
+Refresh interval:
+Every 60 seconds
+
+Best quality:
+Add the source at 1952 x 1104 and scale it down inside your scene.
+
+Privacy:
+Keep your API key and full widget URL private. Hide everything after # before sending a screenshot or URL for support.

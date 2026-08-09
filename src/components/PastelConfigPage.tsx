@@ -35,7 +35,7 @@ export function PastelConfigPage() {
   const selectedPalette = PASTEL_PALETTES[palette];
   const origin =
     typeof window === "undefined"
-      ? "https://pastel-valorant-overlay.vercel.app"
+      ? "https://pastel-valorant-rank-widget.vercel.app"
       : window.location.origin;
   const platformParam = platform === "console" ? "&platform=console" : "";
   const widgetBaseUrl = `${origin}/pastel/widget?palette=${palette}&id=${encodeURIComponent(riotId)}${platformParam}`;

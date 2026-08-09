@@ -6,7 +6,7 @@ Thank you for your purchase!
 2. Generate your free HenrikDev API key:
    https://api.henrikdev.xyz/dashboard/
 3. Open the overlay setup page:
-   https://pastel-valorant-overlay.vercel.app/
+   https://pastel-valorant-rank-widget.vercel.app/
 4. Enter your API key and Riot ID in Name#TAG format.
 5. Choose PC or Console and select a color palette.
 6. Copy the generated widget URL.

@@ -1,7 +1,7 @@
 PASTEL VALORANT OVERLAY - QUICK REFERENCE
 
 Setup page:
-https://pastel-valorant-overlay.vercel.app/
+https://pastel-valorant-rank-widget.vercel.app/
 
 Get a free HenrikDev API key:
 https://api.henrikdev.xyz/dashboard/

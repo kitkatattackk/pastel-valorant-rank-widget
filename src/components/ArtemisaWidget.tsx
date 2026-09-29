@@ -1,17 +1,26 @@
 import type { ValorantStats } from "@/types";
-import { PASTEL_PALETTES, type PastelPalette, type PastelPaletteId } from "@/lib/pastel-palettes";
+import {
+  HALLOWEEN_COLORS,
+  PASTEL_PALETTES,
+  type PastelColors,
+  type PastelPaletteId,
+  type PastelTheme,
+} from "@/lib/pastel-palettes";
+import { HalloweenBarFx, HalloweenDecor, HalloweenHeist, PumpkinIcon } from "@/components/HalloweenDecor";
 import { parseRank } from "@/lib/valorant-ranks";
 
 interface Props {
   stats: ValorantStats;
   palette?: PastelPaletteId;
+  theme?: PastelTheme;
 }
 
 const text = "rgb(254, 254, 254)";
 const mutedText = "rgba(254, 254, 254, 0.78)";
 
-export function PastelRankWidget({ stats, palette = "rose" }: Props) {
-  const colors = PASTEL_PALETTES[palette];
+export function PastelRankWidget({ stats, palette = "rose", theme = "default" }: Props) {
+  const halloween = theme === "halloween";
+  const colors: PastelColors = halloween ? HALLOWEEN_COLORS : PASTEL_PALETTES[palette];
   const { rankTier, rr, rrToNext, kd, wins, losses } = stats;
   const rank = parseRank(rankTier);
   const progress = rank.capped ? 100 : Math.min(100, (rr / rrToNext) * 100);
@@ -22,6 +31,7 @@ export function PastelRankWidget({ stats, palette = "rose" }: Props) {
       style={{
         width: 420,
         color: text,
+        ...(halloween ? ({ "--foreground": "rgb(247 239 228)" } as React.CSSProperties) : null),
         fontFamily:
           'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
       }}
@@ -45,7 +55,14 @@ export function PastelRankWidget({ stats, palette = "rose" }: Props) {
           zIndex: 2,
         }}
       >
-        CURRENT RANK ♥
+        {halloween ? (
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 7 }}>
+            CURRENT RANK
+            <PumpkinIcon className="hw-pill-pumpkin" />
+          </span>
+        ) : (
+          "CURRENT RANK ♥"
+        )}
       </div>
 
       <div
@@ -68,6 +85,7 @@ export function PastelRankWidget({ stats, palette = "rose" }: Props) {
             background: `radial-gradient(circle at 18% 30%, ${colors.surfaceGlow} 0%, ${colors.surfaceWash} 34%, transparent 62%)`,
           }}
         />
+        {halloween && <HalloweenDecor size="md" />}
 
         <div
           style={{
@@ -90,13 +108,14 @@ export function PastelRankWidget({ stats, palette = "rose" }: Props) {
             }}
           >
             <div
+              className={halloween ? "hw-float" : undefined}
               style={{
                 width: 92,
                 height: 92,
                 display: "grid",
                 placeItems: "center",
                 position: "relative",
-                transform: "translateX(-4px)",
+                transform: halloween ? undefined : "translateX(-4px)",
               }}
             >
               <div
@@ -134,7 +153,7 @@ export function PastelRankWidget({ stats, palette = "rose" }: Props) {
               >
                 ✦
               </span>
-              <img
+              {halloween ? <HalloweenHeist size="md"><img
                 src={rank.icon}
                 alt={`${rank.label} rank emblem`}
                 width={76}
@@ -151,7 +170,24 @@ export function PastelRankWidget({ stats, palette = "rose" }: Props) {
                     "drop-shadow(0 3px 5px rgba(0, 0, 0, 0.28))",
                   ].join(" "),
                 }}
-              />
+              /></HalloweenHeist> : (<img
+                src={rank.icon}
+                alt={`${rank.label} rank emblem`}
+                width={76}
+                height={76}
+                loading="lazy"
+                style={{
+                  width: 76,
+                  height: 76,
+                  objectFit: "contain",
+                  position: "relative",
+                  filter: [
+                    `drop-shadow(0 0 4px ${rank.accent})`,
+                    `drop-shadow(0 0 10px ${rank.accent})`,
+                    "drop-shadow(0 3px 5px rgba(0, 0, 0, 0.28))",
+                  ].join(" "),
+                }}
+              />)}
             </div>
           </div>
 
@@ -179,7 +215,7 @@ export function PastelRankWidget({ stats, palette = "rose" }: Props) {
               >
                 {rank.label.toUpperCase()}
               </span>
-              <span style={{ flexShrink: 0, fontSize: 28 }}>✦</span>
+              <span style={{ flexShrink: 0, fontSize: 28 }}>{halloween ? <PumpkinIcon className="hw-title-pumpkin" /> : "✦"}</span>
             </div>
 
             <div
@@ -233,13 +269,14 @@ export function PastelRankWidget({ stats, palette = "rose" }: Props) {
                     width: `${progress}%`,
                     height: "100%",
                     borderRadius: 999,
-                    background: text,
+                    background: halloween ? "linear-gradient(90deg, #ff8a1f, #ffb347)" : text,
                     overflow: "hidden",
                     position: "relative",
                     zIndex: 1,
                     animation: "artemisaProgressFill 900ms ease-out both",
                   }}
                 >
+                  {halloween && <HalloweenBarFx />}
                   <div
                     aria-hidden
                     style={{
@@ -258,6 +295,8 @@ export function PastelRankWidget({ stats, palette = "rose" }: Props) {
                 </div>
                 <style>
                   {`
+                    .hw-pill-pumpkin { width: 18px; height: 18px; color: #ff8a1f; }
+                    .hw-title-pumpkin { width: 28px; height: 28px; display: block; color: #ff8a1f; }
                     @keyframes artemisaProgressFill {
                       from { width: 0%; }
                     }
@@ -321,7 +360,7 @@ function Stat({
 }: {
   label: string;
   value: React.ReactNode;
-  colors: PastelPalette;
+  colors: PastelColors;
 }) {
   return (
     <div

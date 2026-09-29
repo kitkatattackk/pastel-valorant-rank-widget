@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useState } from "react";
 import { PastelRankWidget } from "@/components/PastelRankWidget";
 import type { ValorantStats } from "@/types";
 import { fetchPlayerStats } from "@/lib/valorant-api";
-import { parsePastelPalette } from "@/lib/pastel-palettes";
+import { parsePastelPalette, parsePastelTheme } from "@/lib/pastel-palettes";
 
 const NATURAL_SIZE = { width: 420, height: 170 };
 const OUTPUT_SCALE = 4;
@@ -20,6 +20,7 @@ export function PastelWidgetPage() {
   const id = query.get("id")?.trim() ?? "";
   const platform = query.get("platform") === "console" ? "console" : "pc";
   const palette = parsePastelPalette(query.get("palette"));
+  const theme = parsePastelTheme(query.get("theme"));
   const [stats, setStats] = useState<ValorantStats | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [apiKey, setApiKey] = useState("");
@@ -84,7 +85,7 @@ export function PastelWidgetPage() {
           transformOrigin: "top left",
         }}
       >
-        <PastelRankWidget stats={stats} palette={palette} />
+        <PastelRankWidget stats={stats} palette={palette} theme={theme} />
       </div>
     </div>
   );

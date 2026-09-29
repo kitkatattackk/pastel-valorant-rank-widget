@@ -80,3 +80,34 @@ export function parsePastelPalette(value: unknown): PastelPaletteId {
   const candidate = String(value ?? "rose") as PastelPaletteId;
   return candidate in PASTEL_PALETTES ? candidate : "rose";
 }
+
+export interface PastelColors {
+  border: string;
+  accent: string;
+  surface: string;
+  surfaceGlow: string;
+  surfaceWash: string;
+  stats: string;
+  track: string;
+  shadow: string;
+}
+
+export type PastelTheme = "default" | "halloween";
+
+// Halloween replaces the chosen pastel palette with a purple panel and pumpkin trim.
+export const HALLOWEEN_COLORS: PastelColors = {
+  border: "#2a1a3d",
+  accent: "#ff8a1f",
+  surface: "#5d3f86",
+  surfaceGlow: "rgba(255, 170, 80, 0.32)",
+  surfaceWash: "rgba(255, 138, 31, 0.16)",
+  stats: "rgba(28, 15, 44, 0.55)",
+  track: "rgba(28, 15, 44, 0.62)",
+  shadow: "rgba(255, 122, 26, 0.42)",
+};
+
+export const HALLOWEEN_PREVIEW = { preview: "#2a1a3d", dot: "#5b4380" };
+
+export function parsePastelTheme(value: unknown): PastelTheme {
+  return value === "halloween" ? "halloween" : "default";
+}

@@ -3,7 +3,13 @@ import { Check, Copy, ExternalLink, Eye, EyeOff, LoaderCircle, Search } from "lu
 import { PastelRankWidget } from "@/components/PastelRankWidget";
 import type { ValorantStats } from "@/types";
 import { fetchPlayerStats } from "@/lib/valorant-api";
-import { PASTEL_PALETTES, PASTEL_PALETTE_IDS, type PastelPaletteId } from "@/lib/pastel-palettes";
+import {
+  HALLOWEEN_PREVIEW,
+  PASTEL_PALETTES,
+  PASTEL_PALETTE_IDS,
+  type PastelPaletteId,
+  type PastelTheme,
+} from "@/lib/pastel-palettes";
 
 const DEMO_STATS: ValorantStats = {
   rankTier: "Gold 2",
@@ -25,6 +31,7 @@ export function PastelConfigPage() {
   const [showApiKey, setShowApiKey] = useState(false);
   const [platform, setPlatform] = useState<Platform>("pc");
   const [palette, setPalette] = useState<PastelPaletteId>("rose");
+  const [theme, setTheme] = useState<PastelTheme>("default");
   const [stats, setStats] = useState<ValorantStats>(DEMO_STATS);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -32,13 +39,16 @@ export function PastelConfigPage() {
 
   const isValidId = riotId.includes("#");
   const hasApiKey = apiKey.trim().length > 0;
-  const selectedPalette = PASTEL_PALETTES[palette];
+  const halloween = theme === "halloween";
+  const selectedPalette = halloween
+    ? { ...PASTEL_PALETTES[palette], ...HALLOWEEN_PREVIEW }
+    : PASTEL_PALETTES[palette];
   const origin =
     typeof window === "undefined"
       ? "https://pastel-valorant-rank-widget.vercel.app"
       : window.location.origin;
   const platformParam = platform === "console" ? "&platform=console" : "";
-  const widgetBaseUrl = `${origin}/pastel/widget?palette=${palette}&id=${encodeURIComponent(riotId)}${platformParam}`;
+  const widgetBaseUrl = `${origin}/pastel/widget?palette=${palette}${halloween ? "&theme=halloween" : ""}&id=${encodeURIComponent(riotId)}${platformParam}`;
   const widgetUrl = `${widgetBaseUrl}#api_key=${encodeURIComponent(apiKey.trim())}`;
   const displayedWidgetUrl = hasApiKey ? `${widgetBaseUrl}#api_key=••••••••` : widgetBaseUrl;
 
@@ -223,6 +233,30 @@ export function PastelConfigPage() {
 
             <fieldset>
               <legend className="mb-3 text-xs font-black uppercase tracking-[0.14em] text-[#7c5b72]">
+                Theme
+              </legend>
+              <div className="grid grid-cols-2 gap-2">
+                {(["default", "halloween"] as const).map((value) => (
+                  <button
+                    key={value}
+                    type="button"
+                    onClick={() => setTheme(value)}
+                    aria-pressed={theme === value}
+                    className="rounded-md border-2 px-3 py-2.5 text-sm font-black transition-colors"
+                    style={{
+                      borderColor: theme === value ? "#62485c" : "#d8c4d2",
+                      background: theme === value ? "#62485c" : "#fffafd",
+                      color: theme === value ? "#fefefe" : "#76566d",
+                    }}
+                  >
+                    {value === "default" ? "Pastel" : "🎃 Halloween"}
+                  </button>
+                ))}
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend className="mb-3 text-xs font-black uppercase tracking-[0.14em] text-[#7c5b72]">
                 Color
               </legend>
               <div className="grid grid-cols-5 gap-2">
@@ -306,7 +340,7 @@ export function PastelConfigPage() {
             </div>
             <div className="flex min-h-[300px] w-full items-center justify-center overflow-auto rounded-md border border-[#b18aa5] bg-[#fffafd]/90 px-6 py-14 shadow-[0_22px_50px_rgba(98,72,92,0.13)]">
               <div className="shrink-0 scale-[0.78] sm:scale-100">
-                <PastelRankWidget stats={stats} palette={palette} />
+                <PastelRankWidget stats={stats} palette={palette} theme={theme} />
               </div>
             </div>
           </div>

@@ -13,8 +13,15 @@ Browser source size:
 Width: 1952
 Height: 1104
 
-Available palettes:
+Available themes:
+Pastel, Halloween
+
+Pastel palettes:
 Rose, Lavender, Sky, Mint, Peach
+
+Switch themes or update an existing source:
+Generate a new URL on the setup page, replace your Browser Source URL,
+and refresh the source. Halloween URLs include theme=halloween.
 
 Supported software:
 OBS, Meld, Streamlabs, and other software with browser sources
